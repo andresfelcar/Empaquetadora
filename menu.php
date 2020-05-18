@@ -21,6 +21,7 @@ if ($resultado == null) {
 				echo '<li><a href="View_Products.php">Productos</a></li>';
 				echo '<li><a href="Zonas.php">Zonas</a></li>';
 				echo '<li><a href="View_Ranking.php">Ranking</a></li>';
+				echo '<li><a href="View_ProductsDay.php">Productos del día</a></li>';
 			}
 			?>
 		</ul>

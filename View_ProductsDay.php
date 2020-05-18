@@ -18,7 +18,7 @@ $invoice =  new Controller();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking</title>
+    <title>Productos del día</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href="resource/css/style.css" rel="stylesheet">
@@ -26,7 +26,7 @@ $invoice =  new Controller();
 
 <body>
     <div class="naveg">
-        <h2 id="hh">Ranking</h2>
+        <h2 id="hh">Productos del día</h2>
     </div>
     <div class="container">
         <div class="marggin">
@@ -34,40 +34,31 @@ $invoice =  new Controller();
         </div>
         <br>
         <form action="" method="POST">
-            <input type="date" name="fecha1">
-            <input type="date" name="fecha2">
+            <input type="date" name="dia">
             <button type="submit" class="btn btn-success">Buscar</button>
         </form>
-
         <table id="data-table" class="table table-condensed table-striped">
             <thead>
                 <tr>
-                    <th width="7%">Id Vendedor</th>
+                    <th width="10%">Id Producto</th>
                     <th width="30%">Nombre</th>
-                    <th width="15%">Total</th>
-                    <th width="3%"></th>
-                    <th width="3%"></th>
-                    <th width="3%"></th>
+                    <th width="30%">Cantidad</th>
+                 
                 </tr>
             </thead>
             <?php
-            if (!empty($_POST['fecha1']) && !empty($_POST['fecha2'])) {
-                $array=[];
-                array_push($array,$_POST['fecha1'],$_POST['fecha2']);
-                $result = $invoice->Ranking(0,$array);
+            if (!empty($_POST['dia'])) {
+                $result = $invoice->ProductsList(0,$_POST['dia']);
                 for ($i = 0; $i < count($result); $i++) {
-
                     $resultado = $result[$i];
-
                     echo "<tr>
                     <td>$resultado[0]</td>
-                    <td>$resultado[2]</td>
                     <td>$resultado[1]</td>
+                    <td>$resultado[2]</td>
                     </tr>";
                 }
             }
             ?>
-
         </table>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
