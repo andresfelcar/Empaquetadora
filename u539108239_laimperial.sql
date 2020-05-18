@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 17-05-2020 a las 16:36:08
--- Versión del servidor: 10.4.13-MariaDB
--- Versión de PHP: 7.2.29
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 18-05-2020 a las 18:47:21
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -86,7 +85,12 @@ CREATE TABLE `detallefacturas` (
 --
 
 INSERT INTO `detallefacturas` (`IdDFactura`, `IdFactura`, `IdProducto`, `Cantidad`) VALUES
-(86, 63, 22, 20);
+(88, 65, 4, 3),
+(89, 65, 14, 5),
+(90, 65, 4, 4),
+(91, 66, 4, 3),
+(92, 66, 4, 2),
+(93, 66, 58, 15);
 
 -- --------------------------------------------------------
 
@@ -97,7 +101,7 @@ INSERT INTO `detallefacturas` (`IdDFactura`, `IdFactura`, `IdProducto`, `Cantida
 CREATE TABLE `facturas` (
   `IdFactura` int(11) NOT NULL,
   `IdCliente` int(11) DEFAULT NULL,
-  `Fecha` datetime DEFAULT NULL,
+  `Fecha` date DEFAULT NULL,
   `IdUsuario` int(11) DEFAULT NULL,
   `Total` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -107,7 +111,8 @@ CREATE TABLE `facturas` (
 --
 
 INSERT INTO `facturas` (`IdFactura`, `IdCliente`, `Fecha`, `IdUsuario`, `Total`) VALUES
-(63, 13, '2020-04-20 05:07:56', 42, '20000.00');
+(65, 11, '2020-05-18', 40, '70500.00'),
+(66, 13, '2020-05-18', 40, '763500.00');
 
 -- --------------------------------------------------------
 
@@ -133,7 +138,7 @@ INSERT INTO `productos` (`IdProducto`, `Nombre`, `Precio`, `Cantidad`, `IdCatego
 (1, 'acetaminofen x 100', '5500.00', 0, 1, '0.00', '0.06'),
 (2, 'acetaminofen x 300', '15000.00', 20, 1, '0.00', '0.06'),
 (3, 'acido muriatico delicia peq x 35', '52500.00', 10, 1, '0.00', '0.06'),
-(4, 'acido muriatico delicia peq x uni', '1500.00', 20, 1, '0.00', '0.06'),
+(4, 'acido muriatico delicia peq x uni', '1500.00', 8, 1, '0.00', '0.06'),
 (5, 'acido muriatico g delicia 400  ml x 24 ', '67200.00', 10, 1, '0.00', '0.06'),
 (6, 'acido muriatico g delicia 400  ml x uni', '2800.00', 16, 1, '0.00', '0.06'),
 (7, 'acido muriatico g 400  ml x 24', '57600.00', 20, 1, '0.00', '0.06'),
@@ -143,7 +148,7 @@ INSERT INTO `productos` (`IdProducto`, `Nombre`, `Precio`, `Cantidad`, `IdCatego
 (11, 'algod?n grande  x 12', '10200.00', 20, 1, '0.00', '0.06'),
 (12, 'algod?n peq x 50', '8000.00', 20, 1, '0.00', '0.06'),
 (13, 'balde grande x 12', '78000.00', 20, 1, '0.00', '0.06'),
-(14, 'balde grande x uni', '12000.00', 20, 1, '0.00', '0.06'),
+(14, 'balde grande x uni', '12000.00', 15, 1, '0.00', '0.06'),
 (15, 'balde mediano x 12', '66000.00', 20, 1, '0.00', '0.06'),
 (16, 'balde mediano x uni', '8000.00', 20, 1, '0.00', '0.06'),
 (17, 'balde sencillo  x 12', '42000.00', 20, 1, '0.00', '0.06'),
@@ -187,7 +192,7 @@ INSERT INTO `productos` (`IdProducto`, `Nombre`, `Precio`, `Cantidad`, `IdCatego
 (55, 'cepillo carretero x uni', '8500.00', 20, 1, '0.00', '0.06'),
 (56, 'cepillo diente adulto x  12', '9000.00', 20, 1, '0.00', '0.06'),
 (57, 'cepillo diente ni?o x  12', '9000.00', 20, 1, '0.00', '0.06'),
-(58, 'cepillo piso x 12', '50400.00', 20, 1, '0.00', '0.06'),
+(58, 'cepillo piso x 12', '50400.00', 5, 1, '0.00', '0.06'),
 (59, 'cepillo piso x uni', '4200.00', 20, 1, '0.00', '0.06'),
 (60, 'cepillo ropa caja x 120 ', '156000.00', 20, 1, '0.00', '0.06'),
 (61, 'cepillo ropa x uni', '1500.00', 20, 1, '0.00', '0.06'),
@@ -562,13 +567,13 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `detallefacturas`
 --
 ALTER TABLE `detallefacturas`
-  MODIFY `IdDFactura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `IdDFactura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `IdFactura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `IdFactura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
