@@ -25,7 +25,14 @@ class ProductsList_Controller
     {
         $conexion = Conexion::connection();
 
-        $sql = "SELECT * from usuarios WHERE Correo = ? AND Contrasena = MD5(?) ";
+        $sql = "SELECT res.IdProducto, res.Nombre,SUM(res.cantidad) Cantidad from 
+        (SELECT pr.Nombre,fa.IdFactura, fa.Fecha,de.IdDFactura,
+        de.IdProducto,de.Cantidad from facturas fa
+        INNER JOIN detallefacturas de
+        INNER JOIN productos pr
+        WHERE fa.Fecha = ? AND de.IdProducto = pr.IdProducto
+        AND fa.IdFactura = de.IdFactura) res
+        GROUP by res.IdProducto";
 
         $stmt = $conexion->prepare($sql);
 
@@ -35,7 +42,7 @@ class ProductsList_Controller
         //obtener todos los resultados
         $result = $stmt->get_result();
         //asosiarlos a un array fetch row
-        return $result->fetch_row();
+        return $result;
     }
 
     public function Insert()

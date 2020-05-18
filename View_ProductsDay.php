@@ -49,8 +49,7 @@ $invoice =  new Controller();
             <?php
             if (!empty($_POST['dia'])) {
                 $result = $invoice->ProductsList(0,$_POST['dia']);
-                for ($i = 0; $i < count($result); $i++) {
-                    $resultado = $result[$i];
+                while($resultado = $result->fetch_array()) {
                     echo "<tr>
                     <td>$resultado[0]</td>
                     <td>$resultado[1]</td>
