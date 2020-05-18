@@ -40,7 +40,7 @@ if (!empty($_GET['update_idd'])) {
 <body>
 <div class="naveg">
         <div class="heading">
-            <h2 id="hh">Clientes x Zona</h2>
+            <h2 id="hh">Clientes</h2>
         </div>
     </div>
     <div class="tabla">

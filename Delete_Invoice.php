@@ -13,7 +13,6 @@ if(!empty($_POST['id'])){
     $array = array(
         0=>$_POST['id']
     );
-    echo $array[0];
     $resultado = $invoice->Invoices(3,$array);
     return $resultado;
 }

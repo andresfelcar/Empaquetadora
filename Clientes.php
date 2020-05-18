@@ -64,7 +64,7 @@ if (!empty($_POST['code'])) {
             <p>Cliente: <input name="nomcli" class="input" type="text" required autofocus></p>
             <p>ID: <input name="tel" class="input" type="text" ></p>
             <p>Celular: <input name="cel" class="input" type="text" ></p>
-            <p>Celular: <input name="emailcli" class="input" type="text" ></p>
+            <p>Correo: <input name="emailcli" class="input" type="text" ></p>
             <p>Direccion: <input name="direc" class="input" type="text" ></p>
             <p>Zona: <select name="zona" id="productCode_1" class="">
                     <option selected>Seleccione alguno</option>
@@ -98,7 +98,7 @@ if (!empty($_POST['code'])) {
                     <th>Cliente</th>
                     <th>ID</th>
                     <th>Celular</th>
-                    <th>Celular</th>
+                    <th>Correo</th>
                     <th>Direccion</th>
                 </tr>
             </thead>

@@ -61,7 +61,7 @@ class Invoices_Controller
         $conexion = Conexion::connection();
         date_default_timezone_set('America/Bogota');
         $date = date('Y-m-d h:i:s', time());
-        $stmt = $conexion->prepare("INSERT INTO facturas(IdCliente,Fecha,IdUsuario,Total) VALUES(?,'$date',?,?)");
+        $stmt = $conexion->prepare("INSERT INTO facturas(IdCliente,Fecha,IdUsuario,Total,Estado) VALUES(?,'$date',?,?,true)");
         $stmt->bind_param("iid", $array['companyName'], $array['userId'], $array['subTotal']);
         $stmt->execute();
         $id = $conexion->query("SELECT @@identity AS IdFactura");
