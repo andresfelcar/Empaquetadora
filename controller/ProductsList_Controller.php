@@ -31,7 +31,7 @@ class ProductsList_Controller
         INNER JOIN detallefacturas de
         INNER JOIN productos pr
         WHERE fa.Fecha = ? AND de.IdProducto = pr.IdProducto
-        AND fa.IdFactura = de.IdFactura) res
+        AND fa.IdFactura = de.IdFactura AND fa.Estado !=0) res
         GROUP by res.IdProducto";
 
         $stmt = $conexion->prepare($sql);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2020 a las 03:38:10
+-- Tiempo de generación: 19-05-2020 a las 19:02:58
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `u539108239_laimperial`
 --
-CREATE DATABASE IF NOT EXISTS `u539108239_laimperial` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `u539108239_laimperial`;
 
 -- --------------------------------------------------------
 
@@ -43,15 +41,12 @@ CREATE TABLE `categorias` (
 CREATE TABLE `clientes` (
   `IdCliente` int(11) NOT NULL,
   `Nombre1` varchar(60) DEFAULT NULL,
-  `Telefono` varchar(11) DEFAULT NULL,
+  `Id` varchar(20) DEFAULT NULL,
   `Celular` varchar(11) DEFAULT NULL,
   `Correo` varchar(50) DEFAULT NULL,
   `Direccion` varchar(60) NOT NULL,
-  `TDocumento` varchar(5) DEFAULT NULL,
-  `NDocumento` varchar(11) DEFAULT NULL,
-  `FechaIngreso` datetime DEFAULT NULL,
-  `NFactura` int(11) DEFAULT NULL,
-  `IdZona` int(11) DEFAULT NULL
+  `IdZona` int(11) DEFAULT NULL,
+  `Estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -80,7 +75,7 @@ CREATE TABLE `facturas` (
   `Fecha` date DEFAULT NULL,
   `IdUsuario` int(11) DEFAULT NULL,
   `Total` decimal(10,2) NOT NULL,
-  `Estado` tinyint(1) NOT NULL,
+  `Estado` tinyint(1) NOT NULL DEFAULT 1,
   `Creacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -96,8 +91,19 @@ CREATE TABLE `productos` (
   `Precio` decimal(10,2) DEFAULT NULL,
   `Cantidad` int(11) DEFAULT NULL,
   `IdCategoria` int(11) DEFAULT NULL,
-  `PorceEmpresa` decimal(10,2) DEFAULT NULL,
-  `PorceVendedor` decimal(10,2) DEFAULT NULL
+  `Porcentaje` int(11) NOT NULL,
+  `Estado` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipocliente`
+--
+
+CREATE TABLE `tipocliente` (
+  `IdTCliente` int(11) NOT NULL,
+  `Nombre` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -138,7 +144,8 @@ CREATE TABLE `usuarios` (
 
 CREATE TABLE `zonas` (
   `IdZona` int(11) NOT NULL,
-  `NombreZona` varchar(30) DEFAULT NULL
+  `NombreZona` varchar(30) DEFAULT NULL,
+  `Estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -180,6 +187,12 @@ ALTER TABLE `facturas`
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`IdProducto`),
   ADD KEY `fk_IdCategoria` (`IdCategoria`);
+
+--
+-- Indices de la tabla `tipocliente`
+--
+ALTER TABLE `tipocliente`
+  ADD PRIMARY KEY (`IdTCliente`);
 
 --
 -- Indices de la tabla `tusuarios`
@@ -233,6 +246,12 @@ ALTER TABLE `facturas`
 --
 ALTER TABLE `productos`
   MODIFY `IdProducto` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tipocliente`
+--
+ALTER TABLE `tipocliente`
+  MODIFY `IdTCliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tusuarios`
