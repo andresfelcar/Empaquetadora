@@ -1,4 +1,7 @@
 <?php
+
+use Dompdf\Css\Color;
+
 require_once "model/Conexion.php";
 
 class Invoices_Controller
@@ -60,7 +63,7 @@ class Invoices_Controller
     {
         $conexion = Conexion::connection();
         date_default_timezone_set('America/Bogota');
-        $date = date('Y-m-d h:i:s', time());
+        $date = date('Y-m-d H:i:s', time());
         $stmt = $conexion->prepare("INSERT INTO facturas(IdCliente,Fecha,IdUsuario,Total,Creacion) VALUES(?,'$date',?,?,'$date')");
         $stmt->bind_param("iid", $array['companyName'], $array['userId'], $array['subTotal']);
         $stmt->execute();
@@ -103,19 +106,29 @@ class Invoices_Controller
     public function Delete($array, $count = 0)
     {
         $conexion = Conexion::connection();
-        if($count == 0){
+        if ($count == 0) {
             date_default_timezone_set('America/Bogota');
-            $fecha = date('Y-m-d h:i:s', time());
+            $fecha = date('Y-m-d H:i:s', time());
             $dateTime = $conexion->query("SELECT IF('$fecha' < ADDDATE(Creacion, INTERVAL 2 hour)
              ,true, false) as respuesta, Creacion
             FROM facturas
             where IdFactura='$array[0]'");
             $result = $dateTime->fetch_array();
-            if($result[0]== 0){
-                return $result; 
+            if ($result[0] == 0) {
+                return $result;
             }
-        }       
-       
+        }
+        if ($count  == 0) {
+            $result = $conexion->query("SELECT de.IdProducto,SUM(de.Cantidad+pr.Cantidad) suma 
+            FROM detallefacturas de 
+            INNER JOIN productos pr 
+            ON pr.IdProducto = de.IdProducto 
+            WHERE IdFactura = '$array[0]' GROUP by IdProducto");
+            while($product = $result->fetch_row()){
+            $conexion->query("UPDATE productos SET Cantidad = '$product[1]' WHERE IdProducto = '$product[0]'");
+            }
+            
+        }
         $sql = "UPDATE detallefacturas SET Estado = 0 WHERE IdFactura = ? ";
         if ($count == 1) {
             $sql = "UPDATE facturas SET Estado = 0 WHERE IdFactura = ? ";
@@ -162,7 +175,7 @@ class Invoices_Controller
     public function InsertDetFac($array)
     {
         $conexion = Conexion::connection();
-        
+
         $stmt = $conexion->prepare("INSERT INTO detallefacturas(IdFactura,IdProducto,Cantidad) VALUES (?,?,?)");
         $stmt->bind_param("iii", $array[0], $array[1], $array[2]);
         $stmt->execute();
@@ -171,8 +184,8 @@ class Invoices_Controller
         $resultado = $conexion->query($sql);
         $resultado = $resultado->fetch_row();
 
-        $total= $resultado[0]+$array[3];
-        $sql="UPDATE facturas SET Total ='$total' WHERE IdFactura='$array[0]'";
+        $total = $resultado[0] + $array[3];
+        $sql = "UPDATE facturas SET Total ='$total' WHERE IdFactura='$array[0]'";
         $conexion->query($sql);
 
         $sql = "Select Cantidad From productos Where IdProducto='$array[1]'";

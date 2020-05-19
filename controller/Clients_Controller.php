@@ -31,11 +31,11 @@ class Clients_Controller{
     {
         if($array==null){  
             $conexion = Conexion::connection();
-            $sql = "SELECT IdCliente,Nombre1,Telefono,Celular,Correo,Direccion from clientes";
+            $sql = "SELECT IdCliente,Nombre1,Id,Celular,Correo,Direccion from clientes";
             return $conexion->query($sql);
         }
         $conexion = Conexion::connection();
-            $sql = "SELECT IdCliente,Nombre1,Telefono,Celular,Correo,Direccion from clientes WHERE IdCliente='$array'";
+            $sql = "SELECT IdCliente,Nombre1,Id,Celular,Correo,Direccion from clientes WHERE IdCliente='$array'";
             return $conexion->query($sql);
        }
 
@@ -43,7 +43,7 @@ class Clients_Controller{
     {
         $conexion = Conexion::connection();
         
-        $sql = "INSERT INTO clientes (Nombre1,Telefono,Celular,Correo,Direccion,IdZona) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO clientes (Nombre1,Id,Celular,Correo,Direccion,IdZona) VALUES (?,?,?,?,?,?)";
 
         $stmt = $conexion->prepare($sql);
 
@@ -56,7 +56,7 @@ class Clients_Controller{
     {
         $conexion = Conexion::connection();
         
-        $sql = "UPDATE clientes SET Nombre1=?,Telefono=?,Celular=?,Correo=?,Direccion=? WHERE IdCliente=? ";
+        $sql = "UPDATE clientes SET Nombre1=?,Id=?,Celular=?,Correo=?,Direccion=? WHERE IdCliente=? ";
 
         $stmt = $conexion->prepare($sql);
 
@@ -82,7 +82,7 @@ class Clients_Controller{
     {
 
         $conexion = Conexion::connection();
-        $sql = "SELECT IdCliente,Nombre1,Telefono,Celular,Correo,Direccion from clientes WHERE IdZona='$array'";
+        $sql = "SELECT IdCliente,Nombre1,Id,Celular,Correo,Direccion from clientes WHERE IdZona='$array'";
         
         return $conexion->query($sql);
        
