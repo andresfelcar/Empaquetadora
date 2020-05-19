@@ -14,7 +14,7 @@ if(!empty($_POST['id'])){
         0=>$_POST['id']
     );
     $resultado = $invoice->Invoices(3,$array);
-    return $resultado;
+    echo $resultado[0];
 }
 
 

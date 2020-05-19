@@ -103,6 +103,19 @@ class Invoices_Controller
     public function Delete($array, $count = 0)
     {
         $conexion = Conexion::connection();
+        if($count == 0){
+            date_default_timezone_set('America/Bogota');
+            $fecha = date('Y-m-d h:i:s', time());
+            $dateTime = $conexion->query("SELECT IF('$fecha' < ADDDATE(Creacion, INTERVAL 2 hour)
+             ,true, false) as respuesta, Creacion
+            FROM facturas
+            where IdFactura='$array[0]'");
+            $result = $dateTime->fetch_array();
+            if($result[0]== 0){
+                return $result; 
+            }
+        }       
+       
         $sql = "UPDATE detallefacturas SET Estado = 0 WHERE IdFactura = ? ";
         if ($count == 1) {
             $sql = "UPDATE facturas SET Estado = 0 WHERE IdFactura = ? ";
