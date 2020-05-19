@@ -37,7 +37,7 @@ class Invoices_Controller
     {
         if ($array[0] == 1) {
             $conexion = Conexion::connection();
-            $sql = "Select fa.IdFactura,fa.Fecha,cl.Nombre1, fa.Total from facturas fa INNER JOIN clientes cl INNER JOIN usuarios us where fa.IdCliente = cl.IdCliente and fa.IdUsuario= us.IdUsuario ";
+            $sql = "Select fa.IdFactura,fa.Fecha,cl.Nombre1, fa.Total from facturas fa INNER JOIN clientes cl INNER JOIN usuarios us where fa.Estado != 0 and fa.IdCliente = cl.IdCliente and fa.IdUsuario= us.IdUsuario ";
             return $conexion->query($sql);
         }
         if ($array[0] == 2) {
@@ -61,7 +61,7 @@ class Invoices_Controller
         $conexion = Conexion::connection();
         date_default_timezone_set('America/Bogota');
         $date = date('Y-m-d h:i:s', time());
-        $stmt = $conexion->prepare("INSERT INTO facturas(IdCliente,Fecha,IdUsuario,Total,Estado) VALUES(?,'$date',?,?,true)");
+        $stmt = $conexion->prepare("INSERT INTO facturas(IdCliente,Fecha,IdUsuario,Total,Estado,Creacion) VALUES(?,'$date',?,?,true,'$date')");
         $stmt->bind_param("iid", $array['companyName'], $array['userId'], $array['subTotal']);
         $stmt->execute();
         $id = $conexion->query("SELECT @@identity AS IdFactura");
@@ -103,9 +103,9 @@ class Invoices_Controller
     public function Delete($array, $count = 0)
     {
         $conexion = Conexion::connection();
-        $sql = "DELETE from detallefacturas WHERE IdFactura = ? ";
+        $sql = "UPDATE detallefacturas SET Estado = 0 WHERE IdFactura = ? ";
         if ($count == 1) {
-            $sql = "DELETE from facturas WHERE IdFactura = ? ";
+            $sql = "UPDATE facturas SET Estado = 0 WHERE IdFactura = ? ";
         }
         $stmt = $conexion->prepare($sql);
         $stmt->bind_param("i", $array[0]);
